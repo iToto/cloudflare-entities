@@ -24,6 +24,22 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($value, $this->entity->{'get' . $field}());
     }
 
+    public function testDateTimeFormats()
+    {
+        $this->entity->setCreatedOn(
+            new DateTime('2011-07-28 17:19:00', new DateTimeZone('UTC'))
+        );
+        $this->entity->setModifiedOn(
+            new DateTime('2011-07-28 17:19:01', new DateTimeZone('UTC'))
+        );
+
+        $json = json_encode($this->entity);
+        $data = json_decode($json);
+
+        $this->assertEquals('2011-07-28T17:19:00Z', $data->created_on);
+        $this->assertEquals('2011-07-28T17:19:01Z', $data->modified_on);
+    }
+
     public function getTestGetSetData()
     {
         return [

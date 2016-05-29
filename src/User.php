@@ -3,6 +3,7 @@
 namespace mgirouard\CloudFlare\Entities;
 
 use DateTime;
+use DateTimeZone;
 use JsonSerializable;
 
 /**
@@ -32,7 +33,7 @@ class User implements JsonSerializable
 
     private $id;
     private $email;
-    private $firstname;
+    private $firstName;
     private $lastName;
     private $username;
     private $telephone;
@@ -41,6 +42,12 @@ class User implements JsonSerializable
     private $createdOn;
     private $modifiedOn;
     private $twoFactorAuthenticationEnabled;
+
+    public function __construct()
+    {
+        $this->setCreatedOn(new DateTime('now', new DateTimeZone('UTC')));
+        $this->setModifiedOn(new DateTime('now', new DateTimeZone('UTC')));
+    }
 
     /**
      * Get User identifier tag
