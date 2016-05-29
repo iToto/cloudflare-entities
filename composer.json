@@ -1,0 +1,22 @@
+{
+    "name": "mgirouard/cloudflare-entities",
+    "description": "Every CloudFlare API resource represented as stand-alone PHP classes",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Mike Girouard",
+            "email": "mgirouard@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "mgirouard\\CloudFlare\\Entities\\": "src/",
+            "mgirouard\\CloudFlare\\Entities\\Test\\": "test/"
+        }
+    },
+    "require-dev": {
+        "apigen/apigen": "^4.1",
+        "phpunit/phpunit": "^5.3"
+    }
+}
