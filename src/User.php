@@ -23,7 +23,7 @@ use JsonSerializable;
  *     "two_factor_authentication_enabled": false
  * }</pre>
  *
- * @see https://api.cloudflare.com/#user-properties Official API Docs
+ * @see <https://api.cloudflare.com/#user-properties> Official API Docs
  * @see mgirouard\CloudFlare\Entities\Test\UserTest Unit Tests
  */
 class User implements JsonSerializable
