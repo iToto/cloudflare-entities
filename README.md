@@ -1,8 +1,8 @@
 CloudFlare Entities
 ===================
 
-Every CloudFlare API resource represented as stand-alone PHP classes. Automatic
-JSON serialization and hydration is also provided.
+Every [CloudFlare API][0] resource represented as stand-alone PHP classes.
+Automatic JSON serialization and hydration is also provided.
 
 Serialization
 -------------
@@ -74,9 +74,62 @@ Call API Gen and tell it where to render the docs:
 
     vendor/bin/apigen generate --source src --destination ~/Desktop/CloudFlare-Entities
 
+or more simply,
+
+   make docs
+
 Running the Tests
 -----------------
 
 Assuming you've already installed dev dependencies, just call `phpunit`
 
     vendor/bin/phpunit
+
+or more simply,
+
+   make test
+
+To Do
+-----
+
+There's still a decent about of work to do. This list has plenty of overlap so
+a few entities can be merged down into a single common entity (for example:
+App subscriptions and Zone subscriptions).
+
+* [x] User
+* [x] Billing\Profile
+* [ ] Billing\History
+* [ ] Billing\Subscription\App
+* [ ] Billing\Subscription\Zone
+* [ ] User\Firewall\Rule
+* [ ] User\Organization
+* [ ] User\Invite
+* [ ] Zone
+* [ ] Zone\Plan
+* [ ] Zone\Setting
+* [ ] Zone\Record
+* [ ] Zone\RailgunConnection
+* [ ] Zone\Analytics
+* [ ] Railgun
+* [ ] Zone\CustomPage
+* [ ] Zone\CustomCertificate
+* [ ] Zone\KeylessCertificate
+* [ ] Zone\PageRule
+* [ ] Zone\FirewallRule
+* [ ] Zone\Waf\Package
+* [ ] Zone\Waf\Group
+* [ ] Zone\Waf\Rule
+* [ ] Zone\Ssl\Analysis
+* [ ] Zone\Ssl\Packs
+* [ ] Organization
+* [ ] Organization\Member
+* [ ] Organization\Invite
+* [ ] Organization\Role
+* [ ] Organization\Waf\Rule
+* [ ] Organization\Railgun
+* [ ] Certificate
+* [ ] User\VirtualDns
+* [ ] Organization\VirtualDns
+* [ ] IpAddress
+
+[0]: https://api.cloudflare.com/
