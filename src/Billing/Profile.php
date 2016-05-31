@@ -4,7 +4,6 @@ namespace mgirouard\CloudFlare\Entities\Billing;
 
 use DateTime;
 use DateTimeZone;
-use JsonSerializable;
 
 /**
  * A user billing profile
