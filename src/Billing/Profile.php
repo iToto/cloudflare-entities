@@ -475,7 +475,7 @@ class Profile implements JsonSerializable
     {
         return [
             'id'                => 'Id',
-            'first_name'        => 'FirstName'
+            'first_name'        => 'FirstName',
             'last_name'         => 'LastName',
             'address'           => 'Address',
             'address2'          => 'Address2',
@@ -487,7 +487,7 @@ class Profile implements JsonSerializable
             'telephone'         => 'Telephone',
             'card_number'       => 'CardNumber',
             'card_expiry_year'  => 'CardExpiryMonth',
-            'card_expiry_month' => 'CardExpiryYear',,
+            'card_expiry_month' => 'CardExpiryYear',
             'vat'               => 'Vat',
             'edited_on'         => 'EditedOn',
             'created_on'        => 'CreatedOn',
