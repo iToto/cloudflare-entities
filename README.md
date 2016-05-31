@@ -49,7 +49,7 @@ Hydration
 
     use mgirouard\CloudFlare\Entities;
 
-    print_r(Entities\User::hydrateJson('{
+    print_r(Entities\User::jsonHydrate('{
         "id": "7c5dae5552338874e5053f2534d2767a",
         "email": "user@example.com",
         "first_name": "John",
@@ -76,7 +76,7 @@ Call API Gen and tell it where to render the docs:
 
 or more simply,
 
-   make docs
+    make docs
 
 Running the Tests
 -----------------
@@ -87,7 +87,7 @@ Assuming you've already installed dev dependencies, just call `phpunit`
 
 or more simply,
 
-   make test
+    make test
 
 To Do
 -----
