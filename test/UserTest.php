@@ -59,24 +59,35 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testHydration()
     {
+        $data = [
+            "id"          => "7c5dae5552338874e5053f2534d2767a",
+            "email"       => "user@example.com",
+            "first_name"  => "John",
+            "last_name"   => "Appleseed",
+            "username"    => "cfuser12345",
+            "telephone"   => "+1 123-123-1234",
+            "country"     => "US",
+            "zipcode"     => "12345",
+            "created_on"  => "2014-01-01T05:20:00Z",
+            "modified_on" => "2014-01-01T05:20:00Z",
+
+            "two_factor_authentication_enabled" => false
+        ];
+
+        $user = User::jsonHydrate(json_encode($data));
+        $this->assertInstanceOf(User::class, $user);
+
+        // dates are always DateTime instances
+        $data['created_on'] = new DateTime($data['created_on']);
+        $data['modified_on'] = new DateTime($data['modified_on']);
+
+        foreach (User::jsonMap() as $jsonField => $userField) {
+            $this->assertEquals($data[$jsonField], $user->{'get' . $userField}());
+        }
     }
 
     public function testStringification()
     {
-        $fieldMap = [
-            'id'          => 'Id',
-            'email'       => 'Email',
-            'first_name'  => 'FirstName',
-            'last_name'   => 'LastName',
-            'username'    => 'Username',
-            'telephone'   => 'Telephone',
-            'country'     => 'Country',
-            'zipcode'     => 'Zipcode',
-            'telephone'   => 'Telephone',
-            'created_on'  => 'CreatedOn',
-            'modified_on' => 'ModifiedOn',
-        ];
-
         $user = (new User)
             ->setId('7c5dae5552338874e5053f2534d2767a')
             ->setEmail('user@example.com')
@@ -94,7 +105,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $json = json_encode($user);
         $data = json_decode($json, true);
 
-        foreach ($fieldMap as $jsonField => $userField) {
+        foreach (User::jsonMap() as $jsonField => $userField) {
             $this->assertArrayHasKey($jsonField, $data);
 
             if (! in_array($jsonField, ['created_on', 'modified_on'])) {

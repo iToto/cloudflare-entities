@@ -4,7 +4,6 @@ namespace mgirouard\CloudFlare\Entities;
 
 use DateTime;
 use DateTimeZone;
-use JsonSerializable;
 
 /**
  * The currently logged in/authenticated User
@@ -26,7 +25,7 @@ use JsonSerializable;
  * @see <https://api.cloudflare.com/#user-properties> Official API Docs
  * @see mgirouard\CloudFlare\Entities\Test\UserTest Unit Tests
  */
-class User implements JsonSerializable
+class User implements EntityInterface
 {
     /** 2014-01-01T05:20:00Z */
     const DATE_FORMAT = 'Y-m-d\TH:i:s\Z';
@@ -290,26 +289,60 @@ class User implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Implementation of `JsonSerializable::jsonSerialize`
-     *
-     *  @return array
-     */
+    /** @inheritDoc */
     public function jsonSerialize()
     {
-        return [
-            'id'          => $this->getId(),
-            'email'       => $this->getEmail(),
-            'first_name'  => $this->getFirstName(),
-            'last_name'   => $this->getLastName(),
-            'username'    => $this->getUsername(),
-            'telephone'   => $this->getTelephone(),
-            'country'     => $this->getCountry(),
-            'zipcode'     => $this->getZipcode(),
-            'created_on'  => $this->getCreatedOn()->format(self::DATE_FORMAT),
-            'modified_on' => $this->getModifiedOn()->format(self::DATE_FORMAT),
+        $json = [];
 
-            'two_factor_authentication_enabled' => $this->getTwoFactorAuthenticationEnabled(),
+        foreach (self::jsonMap() as $jsonField => $userField) {
+            $json[$jsonField] = $this->{'get' . $userField}();
+        }
+
+        $json['created_on'] = $json['created_on']->format(self::DATE_FORMAT);
+        $json['modified_on'] = $json['modified_on']->format(self::DATE_FORMAT);
+
+        $json['two_factor_authentication_enabled'] =
+            (bool) $json['two_factor_authentication_enabled'];
+
+        return $json;
+    }
+
+    /** @inheritDoc */
+    public static function jsonHydrate($json)
+    {
+        $user = new self;
+        $data = json_decode($json, true);
+        $map  = self::jsonMap();
+
+        $data['created_on'] = new DateTime($data['created_on']);
+        $data['modified_on'] = new DateTime($data['modified_on']);
+
+        $data['two_factor_authentication_enabled'] =
+            (bool) $data['two_factor_authentication_enabled'];
+
+        foreach ($map as $jsonField => $userField) {
+            $user->{'set' . $userField}($data[$jsonField]);
+        }
+
+        return $user;
+    }
+
+    /** @inheritDoc */
+    public static function jsonMap()
+    {
+        return [
+            'id'          => 'Id',
+            'email'       => 'Email',
+            'first_name'  => 'FirstName',
+            'last_name'   => 'LastName',
+            'username'    => 'Username',
+            'telephone'   => 'Telephone',
+            'country'     => 'Country',
+            'zipcode'     => 'Zipcode',
+            'created_on'  => 'CreatedOn',
+            'modified_on' => 'ModifiedOn',
+
+            'two_factor_authentication_enabled' => 'TwoFactorAuthenticationEnabled',
         ];
     }
 }
