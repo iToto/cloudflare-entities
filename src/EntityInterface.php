@@ -10,6 +10,8 @@ interface EntityInterface extends \JsonSerializable
     /** 2014-03-01T12:21:02.0000Z */
     const DATE_FORMAT = 'Y-m-d\TH:i:s.u';
 
+    public function getId();
+
     /**
      * {@inheritDoc}
      *
